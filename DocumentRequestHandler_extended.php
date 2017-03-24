@@ -20,23 +20,31 @@ class DocumentRequestHandler_extension
 	}
 
 	public function handleGetDocumentList ($route) {
-                Flight::json(DocumentRepository::getDocumentList(false, null, array(), $this->getStatusFromUrl($route)));
+		Flight::json(DocumentRepository::getDocumentList(false, null, null, array(), $this->getStatusFromUrl($route)));
 	}
 
 	public function handleGetDocumentListWithAllFields ($route) {
-                Flight::json(DocumentRepository::getDocumentList(true, null, array(), $this->getStatusFromUrl($route)));
+		Flight::json(DocumentRepository::getDocumentList(true, null, null, array(), $this->getStatusFromUrl($route)));
+	}
+
+	public function handleGetDocumentWithAllFields ($docId, $route) {
+		Flight::json(DocumentRepository::getDocumentList(true, null, $docId, array(), $this->getStatusFromUrl($route)));
+	}
+
+	public function handleGetDocumentWithFields ($docId, $fieldsToIncludeString, $route) {
+		Flight::json(DocumentRepository::getDocumentList(true, null, $docId, explode("|", $fieldsToIncludeString), $this->getStatusFromUrl($route)));
 	}
 
 	public function handleGetDocumentListForApp ($appId, $route) {
-                Flight::json(DocumentRepository::getDocumentList(false, $appId, array(), $this->getStatusFromUrl($route)));
+		Flight::json(DocumentRepository::getDocumentList(false, $appId, null, array(), $this->getStatusFromUrl($route)));
 	}
 	
 	public function handleGetDocumentListForAppWithAllFields ($appId, $route) {
-		Flight::json(DocumentRepository::getDocumentList(true, $appId, array(), $this->getStatusFromUrl($route)));
+		Flight::json(DocumentRepository::getDocumentList(true, $appId, null, array(), $this->getStatusFromUrl($route)));
 	}
 
 	public function handleGetDocumentListForAppWithFields ($appId, $fieldsToIncludeString, $route) {
-		Flight::json(DocumentRepository::getDocumentList(true, $appId, explode("|", $fieldsToIncludeString), $this->getStatusFromUrl($route)));
+		Flight::json(DocumentRepository::getDocumentList(true, $appId, null, explode("|", $fieldsToIncludeString), $this->getStatusFromUrl($route)));
 	}
 
 	private function getStatusFromUrl($route) {

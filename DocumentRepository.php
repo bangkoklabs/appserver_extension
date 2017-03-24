@@ -7,7 +7,7 @@ use \UserService;
 
 class DocumentRepository {
 
-	public static function getDocumentList ($withFields=false, $appId=null, $fieldsToInclude=array(), $documentStatus=null) {
+	public static function getDocumentList ($withFields=false, $appId=null, $docId=null, $fieldsToInclude=array(), $documentStatus=null) {
                 $dbFactory = new DBFactory();
 		$db = $dbFactory->createDB();
 
@@ -21,6 +21,10 @@ class DocumentRepository {
 
 		if($appId !== null) {
 			$query .= " AND Doc.app_id = " . $appId;
+		}
+
+		if($docId !== null) {
+			$query .= " AND Doc.id = " . $docId;
 		}
 
 		if($documentStatus != null)
